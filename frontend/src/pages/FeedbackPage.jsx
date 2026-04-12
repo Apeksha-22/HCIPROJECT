@@ -79,10 +79,11 @@ function FeedbackPage() {
     ...menu.dinner.items,
   ]
 
+  // FIX 1: ID handling modified here (_id fallback added)
   const mealOptions = allMeals
     ? [
         { value: '', label: 'Select a meal...' },
-        ...allMeals.map((meal) => ({ value: meal.id, label: meal.name })),
+        ...allMeals.map((meal) => ({ value: meal._id || meal.id, label: meal.name })),
       ]
     : [{ value: '', label: 'Loading meals...' }]
 
@@ -101,12 +102,13 @@ function FeedbackPage() {
     })
   }
 
+  // FIX 2: parseInt removed and string comparison added for MongoDB IDs
   const handleMealChange = (e) => {
     const mealId = e.target.value
-    const selected = allMeals?.find((m) => m.id === parseInt(mealId))
+    const selected = allMeals?.find((m) => (m._id || m.id)?.toString() === mealId.toString())
     setFormData({
       ...formData,
-      mealId: parseInt(mealId) || '',
+      mealId: mealId || '',
       meal: selected?.name || '',
     })
   }
@@ -242,6 +244,7 @@ function FeedbackPage() {
                       {[1, 2, 3, 4, 5].map((star) => (
                         <button
                           key={star}
+                          type="button"
                           onClick={() => setFormData({ ...formData, rating: star })}
                           className={`w-6 h-6 transition-all duration-200 cursor-pointer hover:scale-110 ${
                             formData.rating >= star
