@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
 import { useToastStore } from '../store/toastStore'
 import { useThemeStore } from '../store/themeStore'
-import { Menu, X, LogOut, UtensilsCrossed, BarChart3, FileText, Home, Calendar, Moon, Sun, Star, MessageSquare } from 'lucide-react'
+import { Menu, X, LogOut, UtensilsCrossed, BarChart3, FileText, Home, Calendar, Moon, Sun, Star } from 'lucide-react'
 import clsx from 'clsx'
 
 function Sidebar() {
@@ -20,7 +20,6 @@ function Sidebar() {
     ? [
         { label: 'Dashboard', icon: BarChart3, path: '/admin' },
         { label: 'Reports', icon: FileText, path: '/reports' },
-        { label: 'Feedback', icon: MessageSquare, path: '/admin/feedback' },
       ]
     : [
         { label: 'Dashboard', icon: Home, path: '/dashboard' },
@@ -51,7 +50,7 @@ function Sidebar() {
       {/* Sidebar */}
       <aside
         className={clsx(
-          'fixed md:relative top-0 left-0 h-screen w-72 bg-gradient-to-b from-light-100 to-light-200 dark:from-dark-700 dark:to-dark-800 text-dark-900 dark:text-dark-100 z-30 transform transition-all duration-300 flex flex-col border-r border-light-200 dark:border-dark-600 shadow-soft dark:shadow-none',
+          'fixed md:sticky top-0 left-0 h-screen w-72 bg-gradient-to-b from-light-100 to-light-200 dark:from-dark-700 dark:to-dark-800 text-dark-900 dark:text-dark-100 z-30 transform transition-all duration-300 flex flex-col border-r border-light-200 dark:border-dark-600 shadow-soft dark:shadow-none',
           isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         )}
       >
@@ -70,7 +69,7 @@ function Sidebar() {
         </div>
 
         {/* Menu Items */}
-        <nav className="p-4 flex-1 space-y-2">
+        <nav className="p-4 flex-1 space-y-2 overflow-y-auto">
           {menuItems.map((item) => {
             const Icon = item.icon
             return (
